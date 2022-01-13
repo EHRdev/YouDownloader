@@ -40,6 +40,12 @@ const css = StyleSheet.create({
     resizeMode: 'contain',
     alignSelf: 'center',
   },
+  frontLogoIOS: {
+    width: 370,
+    height: 240,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+  },
   inputCustom: {
     height: 79,
     fontSize: 16,
