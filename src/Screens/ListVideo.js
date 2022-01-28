@@ -118,7 +118,7 @@ class ListVideo extends Component {
     };
   }
 
-  requestPermissions = async (item) => {
+  requestPermissions = async (item, type, mime) => {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -131,7 +131,7 @@ class ListVideo extends Component {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         console.log('You can use storage');
-        this.downloadNow_legacy(item);
+        this.downloadNow_legacy(item, type, mime);
       } else {
         console.log('Storage permission denied');
       }
@@ -160,23 +160,23 @@ openFile = () => {
  }
 
 _downloadExecute = (item, type, mime) => {
-  this.setState({launchItemView: false, progressModal: true, moreFormats: false}); //Desactivadores
-  this.setState({etype: type, emime: mime, vSize: item.contentLength}); //Props Globales
+  this.setState({launchItemView: false, progressModal: true, moreFormats: false, vSize: item.contentLength}); //Desactivadores
+  this.setState({vSize: item.contentLength}); //Props Globales
 
-  Platform.OS === 'ios' ? this.downloadNow_legacy(item) : this.requestPermissions(item);
+  Platform.OS === 'ios' ? this.downloadNow_legacy(item, type, mime) : this.requestPermissions(item, type, mime);
 }
 
-downloadNow_legacy = async (item) => {
+downloadNow_legacy = async (item, type, mime) => {
   const { dirs } = RNFetchBlob.fs;
-  const { vTitle, etype, emime } = this.state;
+  const { vTitle } = this.state;
 
   const dirToSave = Platform.OS === 'ios' ? dirs.DocumentDir : dirs.DownloadDir;
   console.log(dirToSave, '<< Document Path');
 
-  let filePath = `${dirToSave}/${vTitle}.${etype}`;
+  let filePath = `${dirToSave}/${vTitle}.${type}`;
   console.log(filePath, '<< File Path');
 
-  etype === 'mp3' ? this.setState({isMP3: true}) : this.setState({isMP3: false});
+  type === 'mp3' ? this.setState({isMP3: true}) : this.setState({isMP3: false});
   this.setState({filePath: filePath});
 
   Platform.OS === 'android' ? this.androidProcess() : null;
@@ -187,17 +187,17 @@ downloadNow_legacy = async (item) => {
         fileCache: true,
         title: vTitle, // 1
         path: filePath,
-        appendExt: etype,
+        appendExt: type,
       },
       android: {
         addAndroidDownloads: {
           useDownloadManager: true,
           notification: true,
           title: vTitle, // 1
-          description: etype,
+          description: type,
           path: filePath,
           fileCache: true,
-          mime: emime,
+          mime: mime,
           //mime: 'audio/mp3',
         },
       },
