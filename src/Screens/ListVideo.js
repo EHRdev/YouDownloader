@@ -162,7 +162,8 @@ openFile = () => {
 _downloadExecute = (item, type, mime) => {
   this.setState({launchItemView: false, progressModal: true, moreFormats: false}); //Desactivadores
   this.setState({etype: type, emime: mime, vSize: item.contentLength}); //Props Globales
-  this.requestPermissions(item);
+
+  Platform.OS === 'ios' ? this.downloadNow_legacy(item) : this.requestPermissions(item);
 }
 
 downloadNow_legacy = async (item) => {
