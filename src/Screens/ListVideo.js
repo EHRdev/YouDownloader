@@ -544,7 +544,7 @@ _pasteLink = () => {
                         style={css.btnMp3}
                         icon="music"
                         mode="contained"
-                        onPress={() => this._downloadExecute(song[0], 'mp3', 'audio/mp3')} // ------------------------ Second Download Command
+                        onPress={() => this._downloadExecute(song[1], 'mp3', 'audio/mp4')} // ------------------------ Second Download Command
                         labelStyle={css.txtBtnCustomYTInfo}>
                           MP3
                       </Button>

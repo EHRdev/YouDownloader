@@ -105,7 +105,7 @@ class MainScreen extends Component {
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? ('padding"') : ('height')} keyboardVerticalOffset={-100}>
               <TextInput
                 style={css.inputCustom}
-                placeholder="Busca un video"
+                placeholder="Título del video, canción, artista..."
                 mode="outlined"
                 value={keywordTxt}
                 onChangeText={text => this.setState({keywordTxt: text})}
