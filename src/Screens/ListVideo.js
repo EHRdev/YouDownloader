@@ -131,7 +131,7 @@ class ListVideo extends Component {
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         console.log('You can use storage');
-        this.downloadNow_legacy(item, type, mime);
+        this._fileDestiny(item, type);
       } else {
         console.log('Storage permission denied');
       }
@@ -159,24 +159,31 @@ openFile = () => {
     }
  }
 
-_downloadExecute = (item, type, mime) => {
-  this.setState({launchItemView: false, progressModal: true, moreFormats: false, vSize: item.contentLength}); //Desactivadores
+_downloadExecute = (item, type) => {
+  this.setState({launchItemView: false, progressModal: true, moreFormats: false}); //Desactivadores
   this.setState({vSize: item.contentLength}); //Props Globales
 
-  Platform.OS === 'ios' ? this.downloadNow_legacy(item, type, mime) : this.requestPermissions(item, type, mime);
+  Platform.OS === 'ios' ? this._fileDestiny(item, type) : this.requestPermissions(item, type);
 }
 
-downloadNow_legacy = async (item, type, mime) => {
+_fileDestiny = (item, type) => {
+  if (type === 'mp4') {this.downloadMP4(item, type);}
+  else if (type === 'mp3') {this.downloadMP3(item, type);}
+  else {null;}
+}
+
+downloadMP4 = async (item) => {
   const { dirs } = RNFetchBlob.fs;
-  const { vTitle } = this.state;
+  const { videoTitle } = this.state;
+  const videoType = 'mp4';
+  const videoMime = 'video/mp4';
 
   const dirToSave = Platform.OS === 'ios' ? dirs.DocumentDir : dirs.DownloadDir;
   console.log(dirToSave, '<< Document Path');
 
-  let filePath = `${dirToSave}/${vTitle}.${type}`;
+  let filePath = `${dirToSave}/${videoTitle}.${videoType}`;
   console.log(filePath, '<< File Path');
 
-  type === 'mp3' ? this.setState({isMP3: true}) : this.setState({isMP3: false});
   this.setState({filePath: filePath});
 
   Platform.OS === 'android' ? this.androidProcess() : null;
@@ -185,20 +192,71 @@ downloadNow_legacy = async (item, type, mime) => {
     Platform.select({
       ios: {
         fileCache: true,
-        title: vTitle, // 1
+        title: videoTitle, // 1
         path: filePath,
-        appendExt: type,
+        //appendExt: videoType,
       },
       android: {
         addAndroidDownloads: {
           useDownloadManager: true,
           notification: true,
-          title: vTitle, // 1
-          description: type,
+          title: videoTitle, // 1
+          description: videoType,
           path: filePath,
           fileCache: true,
-          mime: mime,
-          //mime: 'audio/mp3',
+          mime: videoMime,
+        },
+      },
+  }))
+    .fetch('GET', item.url)
+    .progress((received, total) => {
+      console.log('progress', received / total);
+      this.setState({downloadProgress: received / total});
+    })
+    .then(resp => {
+        console.log('Response: ', resp);
+        console.log('The file saved to', resp.path());
+        this.completedDownload();
+      })
+      .catch((e) => {
+        console.log('Error >>', e.message);
+        this.cancelDownload();
+      });
+};
+
+downloadMP3 = async (item) => {
+  const { dirs } = RNFetchBlob.fs;
+  const { videoTitle } = this.state;
+  const videoType = 'mp3';
+  const videoMime = 'audio/mp3';
+
+  const dirToSave = Platform.OS === 'ios' ? dirs.DocumentDir : dirs.DownloadDir;
+  console.log(dirToSave, '<< Document Path');
+
+  let filePath = `${dirToSave}/${videoTitle}.${videoType}`;
+  console.log(filePath, '<< File Path');
+
+  this.setState({filePath: filePath});
+
+  Platform.OS === 'android' ? this.androidProcess() : null;
+
+  RNFetchBlob.config(
+    Platform.select({
+      ios: {
+        fileCache: true,
+        title: videoTitle, // 1
+        path: filePath,
+        //appendExt: videoType,
+      },
+      android: {
+        addAndroidDownloads: {
+          useDownloadManager: true,
+          notification: true,
+          title: videoTitle, // 1
+          description: videoType,
+          path: filePath,
+          fileCache: true,
+          mime: videoMime,
         },
       },
   }))
@@ -533,7 +591,7 @@ _pasteLink = () => {
                           style={css.btnMp4}
                           icon="play"
                           mode="contained"
-                          onPress={() => this._downloadExecute(item, 'mp4', 'video/mp4')} // ------------------------ First Download Command
+                          onPress={() => this._downloadMP4(item, 'mp4', 'video/mp4')} // ------------------------ First Download Command
                           labelStyle={css.txtBtnCustomYTInfo}>
                             MP4 <Title style={css.txtQuality}>{item.qualityLabel}</Title>
                         </Button>
@@ -544,7 +602,7 @@ _pasteLink = () => {
                         style={css.btnMp3}
                         icon="music"
                         mode="contained"
-                        onPress={() => this._downloadExecute(song[1], 'mp3', 'audio/mp4')} // ------------------------ Second Download Command
+                        onPress={() => this._downloadMP3(song[0])} // ------------------------ Second Download Command
                         labelStyle={css.txtBtnCustomYTInfo}>
                           MP3
                       </Button>
@@ -575,7 +633,7 @@ _pasteLink = () => {
                           style={css.dialogBtnMP4}
                           icon="play"
                           mode="contained"
-                          onPress={() => this._downloadExecute(item, 'mp4', 'video/mp4')}  // ------------------------ More + MP4
+                          onPress={() => this._downloadExecute(item, 'mp4')}  // ------------------------ More + MP4
                           labelStyle={css.dialogTxtBtnMP4}>
                             MP4
                           </Button>
@@ -594,7 +652,7 @@ _pasteLink = () => {
                                 style={css.dialogBtnMP3}
                                 icon="music"
                                 mode="contained"
-                                onPress={() => this._downloadExecute(item, 'mp3', 'audio/mp3')}  // ------------------------ More + MP3
+                                onPress={() => this._downloadExecute(item, 'mp3')}  // ------------------------ More + MP3
                                 labelStyle={css.dialogTxtBtnMP3}>
                                   MP3
                                 </Button>
