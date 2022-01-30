@@ -37,6 +37,7 @@ import {
   Provider,
   HelperText,
   TextInput,
+  DefaultTheme,
 } from 'react-native-paper';
 import ytdl from 'react-native-ytdl';
 import css from '../Styles/Styles';
@@ -74,19 +75,19 @@ class ListVideo extends Component {
       videoDetails: '',
       videoId: '',
 
-      vImg: '',
-      vTitle: '',
-      vReps: '',
+      videoImg: '',
+      videoTitle: '',
+      videoReps: '',
 
-      vAvatar: '',
-      vAutor: '',
-      vLikes: '',
+      videoAvatar: '',
+      videoAutor: '',
+      videoLikes: '',
 
-      vDate: '2021-01-01T04:20:00Z',
+      videoDate: '2021-01-01T04:20:00Z',
 
-      shortDescription: '',
-      vSubs: '',
-      vSize: '',
+      videoDesc: '',
+      videoSubs: '',
+      videoSize: '',
 
       videowithAudio: [],
       audioonly: [],
@@ -103,10 +104,8 @@ class ListVideo extends Component {
       status: 'Descargando...',
 
       filePath: '',
+      typeU: '',
       showPaste: false,
-
-      etype: '',
-      emime: '',
 
       isMP3: '',
       disabledPlay: true,
@@ -118,14 +117,14 @@ class ListVideo extends Component {
     };
   }
 
-  requestPermissions = async (item, type, mime) => {
+  requestPermissions = async (item, type) => {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         {
           title: 'Permisos de Descarga',
           message:
-            'Los permisos le permiten descargar música y videos de ésta App.',
+            'Los permisos le permiten descargar música y videos de ésta aplicación.',
           buttonPositive: 'Ok',
         }
       );
@@ -160,8 +159,8 @@ openFile = () => {
  }
 
 _downloadExecute = (item, type) => {
-  this.setState({launchItemView: false, progressModal: true, moreFormats: false}); //Desactivadores
-  this.setState({vSize: item.contentLength}); //Props Globales
+  this.setState({launchItemView: false, progressModal: true, moreFormats: false, typeU: type});
+  this.setState({videoSize: item.contentLength}); //Props Globales
 
   Platform.OS === 'ios' ? this._fileDestiny(item, type) : this.requestPermissions(item, type);
 }
@@ -227,8 +226,8 @@ downloadMP4 = async (item) => {
 downloadMP3 = async (item) => {
   const { dirs } = RNFetchBlob.fs;
   const { videoTitle } = this.state;
-  const videoType = 'mp3';
-  const videoMime = 'audio/mp3';
+  const videoType = 'mp3';  // IMPORTANTE IOS
+  const videoMime = 'audio/mp4';
 
   const dirToSave = Platform.OS === 'ios' ? dirs.DocumentDir : dirs.DownloadDir;
   console.log(dirToSave, '<< Document Path');
@@ -286,7 +285,14 @@ cancelDownload = () => {
 
 closeProgress = () => {
   //Reset Values
-  this.setState({progressModal: false, isIndet: false, status: 'Descargando...', colorLine: '#2BBD60',  downloadProgress: 0, disabledPlay: true, disabledClose: true, showSnack: false});
+  this.setState({progressModal: false, isIndet: false});
+  this._resetProps();
+}
+
+_resetProps = () => {
+    setTimeout(() => {
+      this.setState({status: 'Descargando...', colorLine: '#2BBD60',  downloadProgress: 0, disabledPlay: true, showSnack: false});
+    }, 1000);
 }
 
   scraperFormat = info => {
@@ -314,21 +320,21 @@ closeProgress = () => {
 
         var sizeV = resp.videoDetails.thumbnails.length;
 
-        let vLikes = this.numberWithCommas(resp.videoDetails.likes);
-        let vReps = this.numberWithCommas(resp.videoDetails.viewCount);
-        let vSubs = this.numberWithCommas(resp.videoDetails.author.subscriber_count);
+        let videoLikes = this.numberWithCommas(resp.videoDetails.likes);
+        let videoReps = this.numberWithCommas(resp.videoDetails.viewCount);
+        let videoSubs = this.numberWithCommas(resp.videoDetails.author.subscriber_count);
 
             this.setState({
                 videoDetails: resp.videoDetails,
                 videoId: resp.videoDetails.videoId,
-                vImg: resp.videoDetails.thumbnails[sizeV - 1].url,
-                vTitle: resp.videoDetails.title,
-                vReps: vReps,
-                vDate: resp.videoDetails.publishDate,
-                vLikes: vLikes,
-                vAvatar: resp.videoDetails.author.thumbnails[0].url,
-                vAutor: resp.videoDetails.author.name,
-                vSubs: vSubs,
+                videoImg: resp.videoDetails.thumbnails[sizeV - 1].url,
+                videoTitle: resp.videoDetails.title,
+                videoReps: videoReps,
+                videoDate: resp.videoDetails.publishDate,
+                videoLikes: videoLikes,
+                videoAvatar: resp.videoDetails.author.thumbnails[0].url,
+                videoAutor: resp.videoDetails.author.name,
+                videoSubs: videoSubs,
             });
 
             this.scraperFormat(resp);
@@ -457,7 +463,6 @@ _pasteLink = () => {
     this.setState({link_YT: clipboardTxt});
   };
   numberWithCommas = (num) => {return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');};
-  _viewAllFormats = () => {Vibration.vibrate(3); this.setState({moreFormats: true});}
   hideShowMore = () => this.setState({moreFormats: false});
   hidePlayer = () => this.setState({openPlayer: false});
   hideModal = () => this.setState({launchItemView: false});
@@ -472,17 +477,18 @@ _pasteLink = () => {
   }
 
   _handlePlayer = () => this.setState({ openPlayer: true });
+  _handleMoreFormats = () => this.setState({moreFormats: true});
 
   render() {
     console.log(this.state);
     const { navigation } = this.props;
-    const {videoList, keywordTxt, btnLoadMore, loading, showSearch, launchItemView, moreFormats, showPaste, etype, link_YT, showError, videoId, openPlayer} = this.state; //GeneraL State
-    const {progressModal, hideProgressModal, downloadProgress, isIndet, colorLine, showSnack, status, disabledPlay, disabledClose} = this.state;
+    const {videoList, keywordTxt, btnLoadMore, loading, showSearch, launchItemView, moreFormats, showPaste, link_YT, showError, videoId, openPlayer} = this.state; //GeneraL State
+    const {progressModal, hideProgressModal, downloadProgress, isIndet, colorLine, showSnack, status, disabledPlay, disabledClose, typeU} = this.state;
 
-    const {vImg, vTitle, vReps, vDate, vLikes, vAvatar, vAutor, vSubs, vSize} = this.state; //Video Details Props Component
+    const {videoImg, videoTitle, videoReps, videoDate, videoLikes, videoAvatar, videoAutor, videoSubs, videoSize} = this.state; //Video Details Props Component
     const {videowithAudio, audioonly, song} = this.state; //Video Format to Component
 
-    var formattedDate = formatDistance(new Date(vDate), new Date(), { locale: es, addSuffix: true });
+    var formattedDate = formatDistance(new Date(videoDate), new Date(), { locale: es, addSuffix: true });
 
     //const { songList, tokenNext } = this.props.route.params;
 
@@ -545,53 +551,56 @@ _pasteLink = () => {
            </ScrollView>
         {/* -------------------| I T E M |------------------- */}
         <Portal>
-            <Modal style={css.loadingModal} visible={launchItemView} onDismiss={this.hideModal}>
-        {loading ? <ActivityIndicator animating={true} color={appRed} size="large"/>
+          <Modal style={css.loadingModal} visible={launchItemView} onDismiss={this.hideModal}>
+          {loading ? <ActivityIndicator animating={true} color={appRed} size="large"/>
           : (
-          <Portal>
-            <Modal style={css.loadingModal} visible={launchItemView} onDismiss={this.hideModal}>
               <Card style={css.cardView}>
-                <Image style={css.imgBackground} source={vImg ? {uri: vImg} : null} />
-                  <IconButton style={css.closeIcon} icon="close" color={appRed} size={20} onPress={() => this.hideModal()}/>
-                  <View style={css.wallInfo}>
-                    <Title style={css.titleTxt} numberOfLines={2}>{vTitle}</Title>
+                <Image style={css.imgBackground} source={videoImg ? {uri: videoImg} : null} />
+                <IconButton style={css.closeIcon} icon="close" color={appRed} size={20} onPress={() => this.hideModal()}/>
+                <View style={css.wallInfo}>
+                    <Title style={css.titleTxt} numberOfLines={2}>{videoTitle}</Title>
                     <View style={css.subWall}>
-                      <Title style={css.counterWithDate}>{vReps} vistas • {formattedDate}</Title>
+                      <Title style={css.counterWithDate}>{videoReps} vistas • {formattedDate}</Title>
                     </View>
-                  </View>
-                  <View style={css.itemsAddsBox}>
-                    <View style={css.itemsBar}>
-                      <IconButton size={16} icon="thumb-up" color="#fff" style={css.iconLikes} />
-                      <Text style={css.itemsBarTxt} numberOfLines={2}>{vLikes + '\nMe Gusta'}</Text>
-                    </View>
-                    <View style={css.itemsBar}>
-                      <IconButton size={29} icon="play" color={appLightRed} style={css.iconPlay} onPress={() => this._handlePlayer()} />
-                      <Text style={css.itemsBarTxt} numberOfLines={2}>Vista Previa</Text>
-                    </View>
-                  </View>
-              <Divider />
-                <View style={css.authorBox}>
-                    <Avatar.Image style={css.avatarPic} size={40} source={vAvatar ? {uri: vAvatar} : null} />
-                      <View style={css.authorTitleAndSubs}>
-                        <Title style={css.authorTxt} numberOfLines={1}>{vAutor}</Title>
-                        {Platform.OS === 'android' ? <Title style={css.subsTxt}>{vSubs} subs</Title> : null }
+                    <View style={css.itemsAddsBox}>
+                      <View style={css.itemsBar}>
+                        <IconButton size={16} icon="thumb-up" color="#fff" style={css.iconLikes} />
+                        <Text style={css.itemsBarTxt} numberOfLines={2}>{videoLikes + '\nMe Gusta'}</Text>
                       </View>
+                      <View style={css.itemsBar}>
+                        <IconButton size={30} icon="play" color={appLightRed} style={css.iconPlay} onPress={() => this._handlePlayer()} />
+                        <Text style={css.itemsBarTxt} numberOfLines={2}>Vista Previa</Text>
+                      </View>
+                      {Platform.OS === 'android' ? (
+                        <View style={css.itemsBar}>
+                          <IconButton size={29} icon="plus" color="cyan" style={css.iconPlay} onPress={() => this._handleMoreFormats()} />
+                          <Text style={css.itemsBarTxt} numberOfLines={2}>Más Formatos</Text>
+                      </View>
+                      ) : null }
                   </View>
-
-              <Divider />
-                  <View style={css.downloadTitleBox}>
-                    <Text style={css.downloadTitle}>DESCARGAR</Text>
-                  </View>
-                  <Card.Actions style={css.actionsCard}>
-                  <ScrollView contentContainerStyle={css.scrollBtnsDownloader}>
-                    <View style={css.listMp4}>
-                      {videowithAudio.map((item, index) => (
+                </View>
+                <Divider />
+                <View style={css.authorBox}>
+                  <Avatar.Image style={css.avatarPic} size={40} source={videoAvatar ? {uri: videoAvatar} : null} />
+                    <View style={css.authorTitleAndSubs}>
+                      <Title style={css.authorTxt} numberOfLines={1}>{videoAutor}</Title>
+                      {Platform.OS === 'android' ? <Title style={css.subsTxt}>{videoSubs} subs</Title> : null }
+                    </View>
+                </View>
+                <Divider />
+                <View style={css.downloadTitleBox}>
+                  <Text style={css.downloadTitle}>DESCARGAR</Text>
+                </View>
+                <Card.Actions style={css.actionsCard}>
+                <ScrollView contentContainerStyle={css.scrollBtnsDownloader}>
+                  <View style={css.listMp4}>
+                    {videowithAudio.map((item, index) => (
                         <Button
                           key={index}
                           style={css.btnMp4}
                           icon="play"
                           mode="contained"
-                          onPress={() => this._downloadMP4(item, 'mp4', 'video/mp4')} // ------------------------ First Download Command
+                          onPress={() => this._downloadExecute(item, 'mp4')} // ------------------------ First Download Command
                           labelStyle={css.txtBtnCustomYTInfo}>
                             MP4 <Title style={css.txtQuality}>{item.qualityLabel}</Title>
                         </Button>
@@ -602,7 +611,7 @@ _pasteLink = () => {
                         style={css.btnMp3}
                         icon="music"
                         mode="contained"
-                        onPress={() => this._downloadMP3(song[0])} // ------------------------ Second Download Command
+                        onPress={() => this._downloadExecute(song[0], 'mp3')} // ------------------------ Second Download Command
                         labelStyle={css.txtBtnCustomYTInfo}>
                           MP3
                       </Button>
@@ -610,86 +619,93 @@ _pasteLink = () => {
                   </ScrollView>
                 </Card.Actions>
               </Card>
-            </Modal>
-            {/* -------------------| PLAYER |------------------- */}
-            <Portal>
-              <Modal visible={openPlayer} onDismiss={this.hidePlayer} >
-                <View>
-                  <YoutubePlayer height={300} play={false} videoId={videoId} />
-                </View>
+              )}
               </Modal>
             </Portal>
 
-            {/* -------------------| MORE FORMATS WITH FAB+ |------------------- */}
-            <FAB style={css.fab} small icon="plus" onPress={() => this._viewAllFormats()}/>
-              <Portal>
-                <Dialog visible={moreFormats} onDismiss={this.hideShowMore}>
-                  <Dialog.Title style={css.dialogTitle}>FORMATOS DISPONIBLES</Dialog.Title>
-                  <Divider/>
-                  <Dialog.Content style={css.dialogContent}>
-                    {videowithAudio.map((item, index) => (
-                      <View key={index} style={css.dialogRaw}>
-                        <Button
-                          style={css.dialogBtnMP4}
-                          icon="play"
-                          mode="contained"
-                          onPress={() => this._downloadExecute(item, 'mp4')}  // ------------------------ More + MP4
-                          labelStyle={css.dialogTxtBtnMP4}>
-                            MP4
-                          </Button>
-                            <Surface style={css.surfaceBox}>
-                              <Text style={css.surfaceNum3}>{item.qualityLabel}</Text>
-                            </Surface>
-                            <Surface style={css.surfaceBox}>
-                              <Text style={css.surfaceNum2}>{Math.round((item.contentLength / 1000000) * 10) / 10}</Text>
-                              <Text style={css.surfaceSub}>Mb</Text>
-                            </Surface>
-                          </View>
-                        ))}
-                          {audioonly.map((item, index) => (
-                            <View key={index} style={css.dialogRaw}>
-                              <Button
-                                style={css.dialogBtnMP3}
-                                icon="music"
-                                mode="contained"
-                                onPress={() => this._downloadExecute(item, 'mp3')}  // ------------------------ More + MP3
-                                labelStyle={css.dialogTxtBtnMP3}>
-                                  MP3
-                                </Button>
-                                <Surface style={css.surfaceBoxCross}>
-                                  <Text style={css.surfaceNum}>{item.audioBitrate}</Text>
-                                  <Text style={css.surfaceTxt}>{'Kbps'}</Text>
-                                </Surface>
-                                <Surface style={css.surfaceBox}>
-                                  <Text style={css.surfaceNum2}>{Math.round((item.contentLength / 1000000) * 10) / 10}</Text>
-                                  <Text style={css.surfaceSub}>Mb</Text>
-                                </Surface>
-                              </View>
-                            ))}
-                          </Dialog.Content>
-                        <Dialog.Actions>
-                          <Button onPress={this.hideShowMore}>Regresar</Button>
-                        </Dialog.Actions>
-                      </Dialog>
-                    </Portal>
-                  </Portal>
-                )}
-                </Modal>
-          </Portal>
+            {/* -------------------| PLAYER |------------------- */}
+            <Portal>
+              <Modal visible={openPlayer} onDismiss={this.hidePlayer}>
+                <View>
+                  <YoutubePlayer height={270} play={false} videoId={videoId} />
+                </View>
+              </Modal>
+            </Portal>
+            {/* -------------------------------------- */}
+
+          {/* -------------------| MORE FORMATS |------------------- */}
+          {moreFormats ? (
+             <Portal>
+             <Dialog visible={true} onDismiss={this.hideShowMore}>
+               <Dialog.Title style={css.dialogTitle}>FORMATOS DISPONIBLES</Dialog.Title>
+               <Divider/>
+               <Dialog.Content style={css.dialogContent}>
+                 {videowithAudio.map((item, index) => (
+                   <View key={index} style={css.dialogRaw}>
+                         <Button
+                           style={css.dialogBtnMP4}
+                           icon="play"
+                           mode="contained"
+                           onPress={() => this._downloadExecute(item, 'mp4')}  // ------------------------ More + MP4
+                           labelStyle={css.dialogTxtBtnMP4}>
+                             MP4
+                           </Button>
+                             <Surface style={css.surfaceBox}>
+                               <Text style={css.surfaceNum3}>{item.qualityLabel}</Text>
+                             </Surface>
+                             <Surface style={css.surfaceBox}>
+                               <Text style={css.surfaceNum2}>{Math.round((item.contentLength / 1000000) * 10) / 10}</Text>
+                               <Text style={css.surfaceSub}>Mb</Text>
+                             </Surface>
+                           </View>
+                         ))}
+                           {audioonly.map((item, index) => (
+                             <View key={index} style={css.dialogRaw}>
+                               <Button
+                                 style={css.dialogBtnMP3}
+                                 icon="music"
+                                 mode="contained"
+                                 onPress={() => this._downloadExecute(item, 'mp3')}  // ------------------------ More + MP3
+                                 labelStyle={css.dialogTxtBtnMP3}>
+                                   MP3
+                                 </Button>
+                                 <Surface style={css.surfaceBoxCross}>
+                                   <Text style={css.surfaceNum}>{item.audioBitrate}</Text>
+                                   <Text style={css.surfaceTxt}>{'Kbps'}</Text>
+                                 </Surface>
+                                 <Surface style={css.surfaceBox}>
+                                   <Text style={css.surfaceNum2}>{Math.round((item.contentLength / 1000000) * 10) / 10}</Text>
+                                   <Text style={css.surfaceSub}>Mb</Text>
+                                 </Surface>
+                               </View>
+                             ))}
+                           </Dialog.Content>
+                         <Dialog.Actions>
+                       <Button onPress={this.hideShowMore}>Regresar</Button>
+                     </Dialog.Actions>
+                   </Dialog>
+                 </Portal>
+              ) : null }
+            {/* -------------------------------------- */}
+
+
           {/* -------------------| PROGRESS BAR DOWNLOAD |------------------- */}
           <Portal>
-          <StatusBar backgroundColor={appDark} />
           <Modal visible={progressModal} onDismiss={hideProgressModal} style={css.backgroundModal}>
             <Card style={css.cardProgress}>
+            <Appbar.Header style={css.headerDownloads} >
+              <Appbar.BackAction onPress={() => this.closeProgress()} />
+              <Appbar.Content title={status} subtitle={'Archivo ' + typeU} />
+              <Appbar.Action icon="close" onPress={() => this.closeProgress()} />
+            </Appbar.Header>
               <View style={css.globalContainer}>
-                <Animatable.Image animation="pulse" easing="ease-out" iterationCount="infinite" source={vImg ? {uri: vImg} : null} style={css.imgProgress}/>
-                <Title style={css.titleProgress} numberOfLines={2}>{vTitle + '.' + etype}</Title>
+                <Animatable.Image animation="pulse" easing="ease-out" iterationCount="infinite" source={videoImg ? {uri: videoImg} : null} style={css.imgProgress}/>
+                <Title style={css.titleProgress} numberOfLines={2}>{videoTitle + '.' + typeU}</Title>
                 <View style={css.barAndStatus}>
                     {Platform.OS === 'ios' ? <Title style={css.percentProgress}>{Math.trunc(downloadProgress * 100) + '%'}</Title>
-                      : <Title style={css.sizeStyle}>{Math.round((vSize / 1000000) * 10) / 10 + ' MB'}</Title>}
+                      : <Title style={css.sizeStyle}>{Math.round((videoSize / 1000000) * 10) / 10 + ' MB'}</Title>}
                     <ProgressBar progress={downloadProgress} indeterminate={isIndet} color={colorLine} style={css.progressStyle}/>
                 </View>
-                <Title style={css.statusProgress}>{status}</Title>
                 <View style={css.actionsProcess}>
                     <Button
                       disabled={disabledPlay}
@@ -701,16 +717,8 @@ _pasteLink = () => {
                       onPress={() => this.openFile()}>
                         Ver
                     </Button>
-                    <Button
-                      disabled={disabledClose}
-                      labelStyle={css.txtBtnProgress}
-                      style={css.btnProcess}
-                      onPress={() => this.closeProgress()}>
-                        Salir
-                    </Button>
                 </View>
               </View>
-              <IconButton icon="close" color={appRed} size={30} style={css.endClose} onPress={() => this.closeProgress()}/>
             </Card>
           </Modal>
           <Snackbar

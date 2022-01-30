@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
 import { Dimensions } from 'react-native';
+import { black } from 'react-native-paper/lib/typescript/styles/colors';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
@@ -11,6 +12,7 @@ export const appRed = '#C72D2D';
 export const appNavy = '#C1083D';
 export const appLightRed = '#EC4848';
 export const appDark = '#121212';
+export const appLight = '#F2F2F2';
 
 //------------------------ General Colors
 
@@ -177,7 +179,7 @@ const css = StyleSheet.create({
   //------------------------ 003 Item Screen
 
   loadingModal: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     marginTop: 0,
   },
    //------------------------ Card Main
@@ -201,6 +203,7 @@ const css = StyleSheet.create({
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
+    marginBottom: 15,
   },
   titleTxt: {
     fontSize: 13,
@@ -242,7 +245,6 @@ const css = StyleSheet.create({
   },
 //------------------------ Author
   authorBox: {
-    marginTop: 10,
     flexDirection: 'row',
     height: 50,
   },
@@ -422,10 +424,9 @@ const css = StyleSheet.create({
       marginTop: 0,
     },
     cardProgress: {
-      backgroundColor: '#0B0B0B',
+      backgroundColor: appDark,
       maxWidth: windowWidth,
       height: 400,
-      margin: 20,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -468,8 +469,8 @@ const css = StyleSheet.create({
   },
   progressStyle: {
     height: 15,
-    borderRadius: 10,
-    //opacity: 0.8,
+    //borderRadius: 10,
+    opacity: 0.9,
   },
   statusProgress: {
     fontSize: 11,
@@ -477,15 +478,17 @@ const css = StyleSheet.create({
   },
   actionsProcess: {
     flexDirection: 'row',
-    marginTop: 30,
+    marginTop: 40,
   },
   txtBtnProgress: {
     fontSize: 16,
     letterSpacing: 2,
   },
   btnProcess: {
-    borderRadius: 20,
-    width: 130,
+    width: 150,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   endClose: {
     position: 'absolute',
@@ -513,6 +516,10 @@ const css = StyleSheet.create({
     scrollBtnsDownloader: {
       flexDirection: 'row',
       justifyContent: 'center',
+    },
+    headerDownloads: {
+      backgroundColor: appDark,
+      height: 45,
     },
 
 //------------------------ Center Forms

@@ -6,11 +6,12 @@ import App from './src/Navigation/App';
 import {
   configureFonts,
   DarkTheme,
+  DefaultTheme,
   Provider as PaperProvider,
 } from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import {name as appName} from './app.json';
-import {appDark, appRed} from './src/Styles/Styles';
+import {appLight, appDark, appRed} from './src/Styles/Styles';
 
 const fontConfig = {
   ios: {
@@ -37,6 +38,18 @@ const dark = {
     background: appDark, // Fondo
     surface: appDark, // Surfaces
     onSurface: appDark, // SnackBar
+  },
+};
+
+const light = {
+  ...DefaultTheme,
+  fonts: configureFonts(fontConfig),
+  colors: {
+    ...DefaultTheme.colors,
+    primary: appRed, // Botones y Detalles
+    background: appLight, // Fondo
+    surface: appLight, // Surfaces
+    onSurface: appLight, // SnackBar
   },
 };
 
