@@ -710,12 +710,12 @@ _pasteLink = () => {
                     <Button
                       disabled={disabledPlay}
                       labelStyle={css.txtBtnProgress}
-                      mode="contained"
-                      icon="play"
-                      //color={'gold'}
+                      mode="outlined"
+                      icon="open-in-new"
+                      color={'#0FCC82'}
                       style={css.btnProcess}
                       onPress={() => this.openFile()}>
-                        Ver
+                        Abrir
                     </Button>
                 </View>
               </View>
