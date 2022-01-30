@@ -426,7 +426,7 @@ const css = StyleSheet.create({
     cardProgress: {
       backgroundColor: appDark,
       maxWidth: windowWidth,
-      height: 400,
+      height: 380,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -478,17 +478,18 @@ const css = StyleSheet.create({
   },
   actionsProcess: {
     flexDirection: 'row',
-    marginTop: 40,
+    marginTop: 20,
   },
   txtBtnProgress: {
     fontSize: 16,
     letterSpacing: 2,
   },
   btnProcess: {
-    width: 150,
-    height: 50,
+    width: 180,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    //backgroundColor: '#0FCC82', // Btn Green
   },
   endClose: {
     position: 'absolute',
