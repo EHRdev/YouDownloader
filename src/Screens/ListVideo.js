@@ -298,7 +298,8 @@ _resetProps = () => {
   scraperFormat = info => {
     let videowithAudio = ytdl.filterFormats(info.formats, 'audioandvideo');
     let audioonly = ytdl.filterFormats(info.formats, 'audioonly');
-    let song = audioonly.filter(audio => audio.audioBitrate === 64).map((audio) => audio);
+    //let song = audioonly.filter(audio => audio.audioBitrate === 64).map((audio) => audio);
+    let song = audioonly.filter(audio => audio.container === 'mp4').map((audio) => audio); //IMPORTANT
 
     console.log('videowithAudio', videowithAudio, '\n', 'audioonly', audioonly);
     console.log('audioonly', audioonly);
