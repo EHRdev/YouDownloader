@@ -19,7 +19,7 @@ import {
 } from 'react-native-paper';
 import 'react-native-gesture-handler';
 import css from '../Styles/Styles';
-import { API_KEY } from '../Styles/Styles';
+import { API_KEY } from '../env';
 import {
   colorSelection,
   appDark,

@@ -1,12 +1,9 @@
 /* eslint-disable prettier/prettier */
 import { StyleSheet } from 'react-native';
 import { Dimensions } from 'react-native';
-import { black } from 'react-native-paper/lib/typescript/styles/colors';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
-
-export const API_KEY = 'AIzaSyA6NT-_-XyBUJxPlVsYhMTIuP6xTJNI04Q'; // Llave YT para MainScreen & ListVideo
 
 export const appRed = '#C72D2D';
 export const appNavy = '#C1083D';
@@ -73,24 +70,27 @@ const css = StyleSheet.create({
     backgroundColor: appDark,
   },
   searchBox: {
-    flexDirection: 'row',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 5,
     marginLeft: 8,
     marginRight: 8,
   },
   searchStyle: {
-    width: windowWidth - 90,
-    //marginTop: 5,
+    width: windowWidth - 16,
+    marginTop: 5,
   },
   btnSearch: {
+    width: windowWidth - 16,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 70,
-    marginLeft: 4,
+    marginTop: 5,
   },
   btnSearchStyle: {
     fontSize: 13,
     color: 'white',
+    letterSpacing: 4,
   },
   pasteBox: {
     flexDirection: 'row',

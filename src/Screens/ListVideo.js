@@ -41,7 +41,8 @@ import {
 } from 'react-native-paper';
 import ytdl from 'react-native-ytdl';
 import css from '../Styles/Styles';
-import { API_KEY, appDark, appRed, appLightRed, windowWidth } from '../Styles/Styles';
+import { appRed, appLightRed, windowWidth } from '../Styles/Styles';
+import { API_KEY } from '../env';
 import 'react-native-gesture-handler';
 import { formatDistance } from 'date-fns';
 import {es} from 'date-fns/locale';
@@ -508,7 +509,7 @@ _pasteLink = () => {
                   <Searchbar style={css.searchStyle} onIconPress={this.validateTxt} iconColor={appLightRed}
                     placeholder={keywordTxt} onChangeText={text => this.setState({keywordTxt: text})} value={keywordTxt}
                   />
-                  <Button style={css.btnSearch} icon="send" labelStyle={css.btnSearchStyle} mode="outlined" compact={true} onPress={this.validateTxt}/>
+                  <Button style={css.btnSearch} labelStyle={css.btnSearchStyle} mode="outlined" compact={true} onPress={this.validateTxt}>Buscar</Button>
                 </View>
                 {showError ? <HelperText type="error" visible={showError}>{typeError}</HelperText> : null}
           </View>
