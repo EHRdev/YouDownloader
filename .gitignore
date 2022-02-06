@@ -60,4 +60,4 @@ buck-out/
 /ios/Pods/
 
 # API
-/src/env
+/src/env.js
