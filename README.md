@@ -7,7 +7,7 @@
 
 <!-- Name -->
 <h1 align="center">
-  <a href="https://github.com/EHRdev/YouMP4">YouMP4 </a>:rocket:<span style="font-variant-caps: petite-caps;font-size: 30px;font-weight: 400;"> Descarga videos en formato MP4 </span>:rocket:
+  <a href="https://github.com/EHRdev/YouMP4">YouDownLoader </a>:rocket:<span style="font-variant-caps: petite-caps;font-size: 30px;font-weight: 400;"> Descarga videos de YouTube </span>:rocket:
 </h1>
 
 <!-- Badges -->
@@ -24,14 +24,15 @@
 </p>
 
 <!-- Text -->
-YouDownloader es una aplicación móvil híbrida construida con [React Native](https://reactnative.dev/), la app te permite descargar videos de YouTube directo al almacenamiento del dispositivo, cuenta con formato de video MP4 y de audio Mp3. A nivel técnico la app usa 2 librerías, una que consulta el API de YouTube y trae información del video con todos sus metadatos y otra que escucha el url generado y lo guarda como archivo. ❤️
+YouDownloader es una aplicación móvil construida con [React Native](https://reactnative.dev/), disponible en Android & iOS, la app te permite descargar videos de YouTube en formato MP4 directo al almacenamiento del dispositivo, cuenta con herramientas adicionales como cuenta conversión a formato de audio Mp3 y reproductor interno de video. ❤️
 
-## 🛍️ Descargar desde la Play Store [aquí](https://play.google.com/store/apps/details?id=com.youDownloader&hl=es_MX)
+## 🛍️ Descargar desde la Play Store aquí
+### Pendiente por nuevas políticas de Google, descargar APK [aquí](https://play.google.com/store/apps/details?id=com.youDownloader&hl=es_MX)
 
 ## 🌟 Funcionalidades
 
 - Descarga videos de YouTube en formato MP4 ⚡
-- Descarga videos de YouTube y los convierte a formato de audio MP3 🎵
+- Convierte MP4 a formato de audio MP3 🎵
 
 <!-- Screens Android -->
 
@@ -67,8 +68,7 @@ YouDownloader es una aplicación móvil híbrida construida con [React Native](h
 
 Estas instrucciones le proporcionarán una copia del proyecto en funcionamiento en su máquina con fines de desarrollo y pruebas.
 
-1. Instalar [NodeJs](https://nodejs.org/en/)
-2. Clona el repositorio en tu máquina
+1. Clona el repositorio en tu PC
 
     ```
     git clone https://github.com/EHRdev/YouDownloader.git
