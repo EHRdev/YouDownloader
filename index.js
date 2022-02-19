@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import 'react-native-gesture-handler'; // Navigation
 import * as React from 'react';
-import {AppRegistry} from 'react-native';
+import { AppRegistry } from 'react-native';
 import App from './src/Navigation/App';
 import {
   configureFonts,
@@ -9,9 +9,9 @@ import {
   DefaultTheme,
   Provider as PaperProvider,
 } from 'react-native-paper';
-import {NavigationContainer} from '@react-navigation/native';
-import {name as appName} from './app.json';
-import {appLight, appDark, appRed} from './src/Styles/Styles';
+import { NavigationContainer } from '@react-navigation/native';
+import { name as appName } from './app.json';
+import { appLight, appDark, appRed } from './src/Styles/Styles';
 
 const fontConfig = {
   ios: {
@@ -34,8 +34,8 @@ const dark = {
   fonts: configureFonts(fontConfig),
   colors: {
     ...DarkTheme.colors,
-    primary: appRed, // Botones y Detalles
-    background: appDark, // Fondo
+    primary: appRed, // Buttons & Details
+    background: appDark, // Background
     surface: appDark, // Surfaces
     onSurface: appDark, // SnackBar
   },
@@ -46,14 +46,13 @@ const light = {
   fonts: configureFonts(fontConfig),
   colors: {
     ...DefaultTheme.colors,
-    primary: appRed, // Botones y Detalles
-    background: appLight, // Fondo
+    primary: appRed, // Buttons & Details
+    background: appLight, // Background
     surface: appLight, // Surfaces
     onSurface: appLight, // SnackBar
   },
 };
 
-// Envolventes Paper y Navigation
 export default function King() {
   return (
     <NavigationContainer>
@@ -65,3 +64,4 @@ export default function King() {
 }
 
 AppRegistry.registerComponent(appName, () => King);
+

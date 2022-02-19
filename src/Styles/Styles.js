@@ -11,11 +11,11 @@ export const appLightRed = '#EC4848';
 export const appDark = '#121212';
 export const appLight = '#F2F2F2';
 
-//------------------------ General Colors
-
+//----------- General Colors --------------|
 export const colorSpinner = '#B32525';
 export const colorSelection = '#414141';
 export const basicYellow = 'yellow';
+//-----------------------------------------|
 
 const css = StyleSheet.create({
 
@@ -177,13 +177,12 @@ const css = StyleSheet.create({
   },
 
   //------------------------ 003 Item Screen
-
   loadingModal: {
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
     marginTop: 0,
   },
-   //------------------------ Card Main
-   cardView: {
+  //------------------------ Card Main
+  cardView: {
     maxWidth: 450,
     maxHeight: 650,
     margin: 20,
@@ -218,7 +217,7 @@ const css = StyleSheet.create({
   counterWithDate: {
     fontSize: 9,
   },
-//------------------------ Surface Likes Container
+  //------------------------ Surface Likes Container
   itemsAddsBox: {
     flexDirection: 'row',
     height: 50,
@@ -243,7 +242,7 @@ const css = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
   },
-//------------------------ Author
+  //------------------------ Author
   authorBox: {
     flexDirection: 'row',
     height: 50,
@@ -267,14 +266,13 @@ const css = StyleSheet.create({
     position: 'absolute',
     top: 12,
   },
-
-//------------------------ Download Zone
+  //------------------------ Download Zone
   downloadTitleBox: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
   },
-   downloadTitle: {
+  downloadTitle: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 11,
@@ -282,7 +280,7 @@ const css = StyleSheet.create({
     lineHeight: 20,
     textAlign: 'center',
   },
-//------------------------ Card Footer
+  //------------------------ Card Footer
   actionsCard: {
     maxHeight: 160,
     justifyContent: 'center',
@@ -320,143 +318,143 @@ const css = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-//--- Dialog in ListSong ---
-    dialogTitle: {
-      fontSize: 10,
-      fontWeight: 'bold',
-      letterSpacing: 2,
-      textAlign: 'justify',
-      lineHeight: 15,
-    },
-    dialogContent: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 15,
-    },
-    dialogRaw: {
-      flexDirection: 'row',
-    },
-    dialogBtnMP4: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: 150,
-      height: 50,
-      margin: 5,
-    },
-    dialogBtnMP3: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: 150,
-      height: 50,
-      margin: 5,
-      //backgroundColor: '#1D65FF', // Botón azul
-      backgroundColor: '#E8E8E8', // Botón gris
-    },
-    dialogTxtBtnMP4: {
-      fontSize: 16,
-      letterSpacing: 1,
-    },
-    dialogTxtBtnMP3: {
-      color: '#000',
-      fontSize: 16,
-      letterSpacing: 1,
-    },
+  //--- Dialog in ListSong ---
+  dialogTitle: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    letterSpacing: 2,
+    textAlign: 'justify',
+    lineHeight: 15,
+  },
+  dialogContent: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  dialogRaw: {
+    flexDirection: 'row',
+  },
+  dialogBtnMP4: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 150,
+    height: 50,
+    margin: 5,
+  },
+  dialogBtnMP3: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 150,
+    height: 50,
+    margin: 5,
+    //backgroundColor: '#1D65FF', //Button Blue
+    backgroundColor: '#E8E8E8', //Button Gray
+  },
+  dialogTxtBtnMP4: {
+    fontSize: 16,
+    letterSpacing: 1,
+  },
+  dialogTxtBtnMP3: {
+    color: '#000',
+    fontSize: 16,
+    letterSpacing: 1,
+  },
   //----------------- Surface Boxes
-    surfaceBox: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 5,
-      width: 50,
-      height: 50,
-      elevation: 4,
-      margin: 5,
-      borderRadius: 4,
-    },
-    surfaceBoxCross: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 5,
-      width: 50,
-      height: 50,
-      elevation: 4,
-      margin: 5,
-      borderRadius: 4,
-    },
-    surfaceTxt: {
-      fontSize: 10,
-      letterSpacing: -1 / 2,
-      textAlign: 'center',
-    },
-    surfaceNum: {
-      fontSize: 11,
-      textAlign: 'center',
-      //color: appLightRed,
-      color: 'gold',
-      fontWeight: 'bold',
-      //margin: 0,
-    },
-    surfaceNum2: {
-      fontSize: 13,
-      textAlign: 'center',
-      color: appLightRed,
-      margin: 0,
-      marginRight: 2,
-      letterSpacing: -1,
-    },
-    surfaceNum3: {
-      fontSize: 13,
-      textAlign: 'center',
-      color: '#4CCEFF',
-      margin: 0,
-      letterSpacing: -1,
-    },
-    surfaceSub: {
-      fontSize: 11,
-      textAlign: 'center',
-    },
-//------------------------------------------------
-    backgroundModal: {
-      backgroundColor: 'rgba(0, 0, 0, 0.7)',
-      height: windowHeight,
-      marginTop: 0,
-    },
-    cardProgress: {
-      backgroundColor: appDark,
-      maxWidth: windowWidth,
-      height: 380,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    globalContainer: {
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    imgProgress: {
-      margin: 20,
-      width: 120,
-      height: 120,
-      borderRadius: 25,
-    },
-    titleProgress: {
-      width: windowWidth,
-      paddingLeft: 40,
-      paddingRight: 40,
-      fontSize: 15,
-      lineHeight: 18,
-      marginTop: 5,
-      marginBottom: 10,
-      letterSpacing: -1,
-      textAlign: 'justify',
-    },
-    barAndStatus: {
-      flexDirection: 'column',
-      width: windowWidth,
-      paddingLeft: 40,
-      paddingRight: 40,
-    },
+  surfaceBox: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    width: 50,
+    height: 50,
+    elevation: 4,
+    margin: 5,
+    borderRadius: 4,
+  },
+  surfaceBoxCross: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    width: 50,
+    height: 50,
+    elevation: 4,
+    margin: 5,
+    borderRadius: 4,
+  },
+  surfaceTxt: {
+    fontSize: 10,
+    letterSpacing: -1 / 2,
+    textAlign: 'center',
+  },
+  surfaceNum: {
+    fontSize: 11,
+    textAlign: 'center',
+    //color: appLightRed,
+    color: 'gold',
+    fontWeight: 'bold',
+    //margin: 0,
+  },
+  surfaceNum2: {
+    fontSize: 13,
+    textAlign: 'center',
+    color: appLightRed,
+    margin: 0,
+    marginRight: 2,
+    letterSpacing: -1,
+  },
+  surfaceNum3: {
+    fontSize: 13,
+    textAlign: 'center',
+    color: '#4CCEFF',
+    margin: 0,
+    letterSpacing: -1,
+  },
+  surfaceSub: {
+    fontSize: 11,
+    textAlign: 'center',
+  },
+  //--------------------------------------
+  backgroundModal: {
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    height: windowHeight,
+    marginTop: 0,
+  },
+  cardProgress: {
+    backgroundColor: appDark,
+    maxWidth: windowWidth,
+    height: 380,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  globalContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imgProgress: {
+    margin: 20,
+    width: 120,
+    height: 120,
+    borderRadius: 25,
+  },
+  titleProgress: {
+    width: windowWidth,
+    paddingLeft: 40,
+    paddingRight: 40,
+    fontSize: 15,
+    lineHeight: 18,
+    marginTop: 5,
+    marginBottom: 10,
+    letterSpacing: -1,
+    textAlign: 'justify',
+  },
+  barAndStatus: {
+    flexDirection: 'column',
+    width: windowWidth,
+    paddingLeft: 40,
+    paddingRight: 40,
+  },
   percentProgress: {
     fontSize: 12,
     letterSpacing: 1,
@@ -496,39 +494,39 @@ const css = StyleSheet.create({
     right: 20,
     top: 0,
   },
-//------------------------ SnackBar
-    snackStyle: {
-      margin: 5,
-      backgroundColor: '#1536B0', // Snack Azul
-      opacity: 0.7,
-    },
-    txtSnack: {
-      fontSize: 15,
-      fontWeight: 'bold',
-      letterSpacing: 0,
-    },
-    txtActionSnack: {
-      fontSize: 15,
-      fontWeight: 'bold',
-      letterSpacing: 2,
-      color: 'orange',
-    },
+  //------------------------ SnackBar
+  snackStyle: {
+    margin: 5,
+    backgroundColor: '#1536B0', // Snack Blue
+    opacity: 0.7,
+  },
+  txtSnack: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    letterSpacing: 0,
+  },
+  txtActionSnack: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    letterSpacing: 2,
+    color: 'orange',
+  },
 
-    scrollBtnsDownloader: {
-      flexDirection: 'row',
-      justifyContent: 'center',
-    },
-    headerDownloads: {
-      backgroundColor: appDark,
-      height: 45,
-    },
+  scrollBtnsDownloader: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  headerDownloads: {
+    backgroundColor: appDark,
+    height: 45,
+  },
 
-//------------------------ Center Forms
-    centerBox: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      textAlign: 'center',
-    },
+  //------------------------ Center Forms
+  centerBox: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
 
 });
 

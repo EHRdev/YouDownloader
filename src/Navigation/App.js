@@ -1,23 +1,20 @@
 /* eslint-disable prettier/prettier */
 import 'react-native-gesture-handler'; // Navigation
 import * as React from 'react';
-import {Image, Platform, Button} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {appDark, appRed} from '../Styles/Styles';
+import { Platform } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { appDark, appRed } from '../Styles/Styles';
 import MainScreen from '../Screens/MainScreen';
 import ListVideo from '../Screens/ListVideo';
 
-// Se crea Stack
 const Stack = createStackNavigator();
 
-// Se crean rutas del Stack
 function App() {
   return (
     <Stack.Navigator
       initialRouteName="MainScreen"
       screenOptions={{
         ...Platform.select({
-          // Personalizador de Dispositivo
           ios: {
             headerStyle: {
               backgroundColor: appDark,
@@ -37,9 +34,9 @@ function App() {
             headerTintColor: '#fff',
           },
         }),
-        cardStyle: {backgroundColor: appDark},
+        cardStyle: { backgroundColor: appDark },
       }}>
-        <Stack.Screen // Cambio de Pantallas
+      <Stack.Screen
         name="MainScreen"
         component={MainScreen}
         // title: 'App Name'
